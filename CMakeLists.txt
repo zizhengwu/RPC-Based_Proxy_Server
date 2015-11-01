@@ -15,7 +15,12 @@ set(SOURCE_SERVER
         gen-cpp/proxy_server_types.h
         cache_implementation/BaseCache.h
         cache_implementation/RandomCache.cpp
-        cache_implementation/RandomCache.h cache_implementation/BaseCache.cpp)
+        cache_implementation/RandomCache.h
+        cache_implementation/BaseCache.cpp
+        cache_implementation/FifoCache.cpp
+        cache_implementation/FifoCache.h
+        cache_implementation/MaxsCache.cpp
+        cache_implementation/MaxsCache.h cache_implementation/Tuple.h)
 
 set(SOURCE_CLIENT
         gen-cpp/client.cpp
