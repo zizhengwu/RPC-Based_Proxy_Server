@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(thrift_hello)
+project(RPC-Based_Proxy_Server)
 
 FIND_PACKAGE(CURL REQUIRED)
 
