@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "hello_world.h"
+#include "proxy_server.h"
 
 using namespace std;
 
@@ -17,12 +17,11 @@ int main(int argc, char *argv[]) {
   boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
   boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
 
-
-  hello_worldClient client(protocol);
+  proxy_serverClient client(protocol);
   transport->open();
 
   std::string return_string;
-  client.hello(return_string);
+  client.get_page(return_string, "https://www.google.com");
   cout << return_string << endl;
   transport->close();
 

@@ -4,8 +4,8 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#ifndef hello_world_TYPES_H
-#define hello_world_TYPES_H
+#ifndef proxy_server_TYPES_H
+#define proxy_server_TYPES_H
 
 #include <iosfwd>
 
