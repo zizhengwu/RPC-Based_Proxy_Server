@@ -12,7 +12,7 @@ public:
     FifoCache() { }
     virtual ~FifoCache() { }
 
-    void update_cache_history(const std::string &url) override;
+    void update_cache_history(const std::string &url, const double size) override;
     void evict() override;
 
 private:

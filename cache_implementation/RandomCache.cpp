@@ -9,6 +9,6 @@ void RandomCache::evict() {
     cache_map.erase(item);
 }
 
-void RandomCache::update_cache_history(const std::string &) {
+void RandomCache::update_cache_history(const std::string &url, const double size) {
 
 }

@@ -22,10 +22,10 @@ int main(int argc, char *argv[]) {
     transport->open();
 
     std::string return_string;
-    std::vector<std::string> urls_to_be_retrieved {"http://www.ign.com", "https://www.google.com", "https://www.google.com", "http://www.ign.com", "https://www.youtube.com", "https://www.twitter.com", "http://www.stackoverflow.com", "https://www.facebook.com", "https://www.linkedin.com", "http://www.gamespot.com/", "http://www.amazon.com/"};
+    std::vector<std::string> urls_to_be_retrieved {"http://www.ign.com", "http://www.amazon.com/", "https://www.google.com", "https://www.reddit.com/", "https://www.google.com", "http://www.ign.com", "https://www.youtube.com", "http://www.gametrailers.com/", "https://www.linkedin.com/", "https://www.facebook.com", "http://www.twitch.tv/", "https://www.linkedin.com", "http://www.gamespot.com/"};
     for (auto url : urls_to_be_retrieved) {
         client.get_page(return_string, url);
-        cout << boost::format("get %1%\n") % url;
+        cout << boost::format("get %1%\tsize: %2% kb\n") % url % (return_string.size() / 1024);
     }
 
     transport->close();

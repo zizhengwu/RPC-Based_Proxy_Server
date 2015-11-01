@@ -8,7 +8,7 @@ public:
     RandomCache() { }
 
     void evict() override ;
-    void update_cache_history(const std::string&) override;
+    void update_cache_history(const std::string &url, const double size) override;
 
 private:
 
