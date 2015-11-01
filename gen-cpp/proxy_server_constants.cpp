@@ -4,13 +4,14 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#include "hello_world_types.h"
+#include "proxy_server_constants.h"
 
-#include <algorithm>
-#include <ostream>
 
-#include <thrift/TToString.h>
 
+const proxy_serverConstants g_proxy_server_constants;
+
+proxy_serverConstants::proxy_serverConstants() {
+}
 
 
 
