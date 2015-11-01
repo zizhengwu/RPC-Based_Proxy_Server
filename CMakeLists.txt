@@ -12,7 +12,10 @@ set(SOURCE_SERVER
         gen-cpp/proxy_server_constants.cpp
         gen-cpp/proxy_server_constants.h
         gen-cpp/proxy_server_types.cpp
-        gen-cpp/proxy_server_types.h)
+        gen-cpp/proxy_server_types.h
+        cache_implementation/BaseCache.h
+        cache_implementation/RandomCache.cpp
+        cache_implementation/RandomCache.h cache_implementation/BaseCache.cpp)
 
 set(SOURCE_CLIENT
         gen-cpp/client.cpp

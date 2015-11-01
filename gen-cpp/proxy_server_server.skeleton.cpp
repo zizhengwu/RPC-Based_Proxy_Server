@@ -12,6 +12,8 @@
 
 #include <curl/curl.h>
 
+#include "../cache_implementation/RandomCache.h"
+
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
@@ -27,20 +29,29 @@ public:
 
     void get_page(std::string& _return, const std::string& url) {
         // Your implementation goes here
-        CURL *curl;
-        CURLcode res;
-
-        curl = curl_easy_init();
-        if(curl) {
-            curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36");
-            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_return);
-            res = curl_easy_perform(curl);
-            curl_easy_cleanup(curl);
+        // hit cache
+        if (cache.check_exist_in_map_content_of_url(url)) {
+            _return = cache.retrieve_content_of_url(url);
         }
+        // not in cache
+        else{
+            CURL *curl;
+            CURLcode res;
 
-        std::cout << boost::format{"url: %1%\ncode: %2%\n"} % url % res;
+            curl = curl_easy_init();
+            if(curl) {
+                curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36");
+                curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+                curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+                curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_return);
+                res = curl_easy_perform(curl);
+                curl_easy_cleanup(curl);
+                cache.insert_into_cache_map(url, _return);
+            }
+
+            std::cout << boost::format("url: %1%\ncode: %2%\n") % url % res;
+        }
+        return;
     }
 
     static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
@@ -48,6 +59,9 @@ public:
         ((std::string*)userp)->append((char*)contents, size * nmemb);
         return size * nmemb;
     }
+
+private:
+    RandomCache cache;
 };
 
 
