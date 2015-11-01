@@ -7,8 +7,8 @@ public:
     virtual ~RandomCache() { }
     RandomCache() { }
 
-    void evict();
-
+    void evict() override ;
+    void update_cache_history(const std::string&) override;
 
 private:
 

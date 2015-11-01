@@ -8,3 +8,7 @@ void RandomCache::evict() {
     std::cout <<  boost::format("swapped out %1% size %2%\n kb") % item->first % (item->second.size() / 1024);
     cache_map.erase(item);
 }
+
+void RandomCache::update_cache_history(const std::string &) {
+
+}

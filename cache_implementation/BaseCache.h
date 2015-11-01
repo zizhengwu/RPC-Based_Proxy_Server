@@ -22,7 +22,7 @@ public:
     virtual void insert_into_cache(const std::string& url, const std::string& content);
     virtual std::string retrieve_content_of_url(const std::string& url) const;
     virtual bool check_if_exist_content_of_url(const std::string& url);
-    virtual void update_cache_history(const std::string& url){};
+    virtual void update_cache_history(const std::string& url)=0;
     virtual void evict()=0;
 
 protected:
