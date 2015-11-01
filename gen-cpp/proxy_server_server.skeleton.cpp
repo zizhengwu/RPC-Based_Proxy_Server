@@ -30,7 +30,7 @@ public:
     void get_page(std::string& _return, const std::string& url) {
         // Your implementation goes here
         // hit cache
-        if (cache.check_exist_in_map_content_of_url(url)) {
+        if (cache.check_if_exist_content_of_url(url)) {
             _return = cache.retrieve_content_of_url(url);
         }
         // not in cache
@@ -46,7 +46,7 @@ public:
                 curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_return);
                 res = curl_easy_perform(curl);
                 curl_easy_cleanup(curl);
-                cache.insert_into_cache_map(url, _return);
+                cache.insert_into_cache(url, _return);
             }
 
             std::cout << boost::format("url: %1%\ncode: %2%\n") % url % res;

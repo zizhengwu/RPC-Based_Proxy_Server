@@ -17,14 +17,14 @@ public:
     double get_cache_size() const {
         return cache_size;
     };
-    void deduct_cache_size(const double& bytes_to_be_deducted);
-    void insert_into_cache_map(const std::string& url, const std::string& content);
-    std::string retrieve_content_of_url(const std::string& url) const;
-    bool check_exist_in_map_content_of_url(const std::string& url);
-    virtual void evict() {};
+
+    virtual void deduct_cache_size(const double& bytes_to_be_deducted);
+    virtual void insert_into_cache(const std::string &url, const std::string &content)=0;
+    virtual std::string retrieve_content_of_url(const std::string& url) const=0;
+    virtual bool check_if_exist_content_of_url(const std::string &url)=0;
+    virtual void evict()=0;
 
 protected:
-    std::map<std::string, std::string> cache_map;
     double cache_size;
     double cache_size_maximum;
 };
