@@ -21,7 +21,7 @@
 class hello_worldIf {
  public:
   virtual ~hello_worldIf() {}
-  virtual int32_t hello() = 0;
+  virtual void hello(std::string& _return) = 0;
 };
 
 class hello_worldIfFactory {
@@ -51,9 +51,8 @@ class hello_worldIfSingletonFactory : virtual public hello_worldIfFactory {
 class hello_worldNull : virtual public hello_worldIf {
  public:
   virtual ~hello_worldNull() {}
-  int32_t hello() {
-    int32_t _return = 0;
-    return _return;
+  void hello(std::string& /* _return */) {
+    return;
   }
 };
 
@@ -104,15 +103,15 @@ class hello_world_hello_result {
 
   hello_world_hello_result(const hello_world_hello_result&);
   hello_world_hello_result& operator=(const hello_world_hello_result&);
-  hello_world_hello_result() : success(0) {
+  hello_world_hello_result() : success() {
   }
 
   virtual ~hello_world_hello_result() throw();
-  int32_t success;
+  std::string success;
 
   _hello_world_hello_result__isset __isset;
 
-  void __set_success(const int32_t val);
+  void __set_success(const std::string& val);
 
   bool operator == (const hello_world_hello_result & rhs) const
   {
@@ -141,7 +140,7 @@ class hello_world_hello_presult {
 
 
   virtual ~hello_world_hello_presult() throw();
-  int32_t* success;
+  std::string* success;
 
   _hello_world_hello_presult__isset __isset;
 
@@ -174,9 +173,9 @@ class hello_worldClient : virtual public hello_worldIf {
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  int32_t hello();
+  void hello(std::string& _return);
   void send_hello();
-  int32_t recv_hello();
+  void recv_hello(std::string& _return);
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -225,13 +224,14 @@ class hello_worldMultiface : virtual public hello_worldIf {
     ifaces_.push_back(iface);
   }
  public:
-  int32_t hello() {
+  void hello(std::string& _return) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->hello();
+      ifaces_[i]->hello(_return);
     }
-    return ifaces_[i]->hello();
+    ifaces_[i]->hello(_return);
+    return;
   }
 
 };
@@ -264,9 +264,9 @@ class hello_worldConcurrentClient : virtual public hello_worldIf {
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  int32_t hello();
+  void hello(std::string& _return);
   int32_t send_hello();
-  int32_t recv_hello(const int32_t seqid);
+  void recv_hello(std::string& _return, const int32_t seqid);
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

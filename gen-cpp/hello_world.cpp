@@ -93,8 +93,8 @@ uint32_t hello_world_hello_result::read(::apache::thrift::protocol::TProtocol* i
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->success);
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->success);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -119,8 +119,8 @@ uint32_t hello_world_hello_result::write(::apache::thrift::protocol::TProtocol* 
   xfer += oprot->writeStructBegin("hello_world_hello_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
-    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRING, 0);
+    xfer += oprot->writeString(this->success);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldStop();
@@ -155,8 +155,8 @@ uint32_t hello_world_hello_presult::read(::apache::thrift::protocol::TProtocol* 
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32((*(this->success)));
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString((*(this->success)));
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -174,10 +174,10 @@ uint32_t hello_world_hello_presult::read(::apache::thrift::protocol::TProtocol* 
   return xfer;
 }
 
-int32_t hello_worldClient::hello()
+void hello_worldClient::hello(std::string& _return)
 {
   send_hello();
-  return recv_hello();
+  recv_hello(_return);
 }
 
 void hello_worldClient::send_hello()
@@ -193,7 +193,7 @@ void hello_worldClient::send_hello()
   oprot_->getTransport()->flush();
 }
 
-int32_t hello_worldClient::recv_hello()
+void hello_worldClient::recv_hello(std::string& _return)
 {
 
   int32_t rseqid = 0;
@@ -218,7 +218,6 @@ int32_t hello_worldClient::recv_hello()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  int32_t _return;
   hello_world_hello_presult result;
   result.success = &_return;
   result.read(iprot_);
@@ -226,7 +225,8 @@ int32_t hello_worldClient::recv_hello()
   iprot_->getTransport()->readEnd();
 
   if (result.__isset.success) {
-    return _return;
+    // _return pointer has now been filled
+    return;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "hello failed: unknown result");
 }
@@ -273,7 +273,7 @@ void hello_worldProcessor::process_hello(int32_t seqid, ::apache::thrift::protoc
 
   hello_world_hello_result result;
   try {
-    result.success = iface_->hello();
+    iface_->hello(result.success);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -311,10 +311,10 @@ void hello_worldProcessor::process_hello(int32_t seqid, ::apache::thrift::protoc
   return processor;
 }
 
-int32_t hello_worldConcurrentClient::hello()
+void hello_worldConcurrentClient::hello(std::string& _return)
 {
   int32_t seqid = send_hello();
-  return recv_hello(seqid);
+  recv_hello(_return, seqid);
 }
 
 int32_t hello_worldConcurrentClient::send_hello()
@@ -334,7 +334,7 @@ int32_t hello_worldConcurrentClient::send_hello()
   return cseqid;
 }
 
-int32_t hello_worldConcurrentClient::recv_hello(const int32_t seqid)
+void hello_worldConcurrentClient::recv_hello(std::string& _return, const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -372,7 +372,6 @@ int32_t hello_worldConcurrentClient::recv_hello(const int32_t seqid)
         using ::apache::thrift::protocol::TProtocolException;
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
-      int32_t _return;
       hello_world_hello_presult result;
       result.success = &_return;
       result.read(iprot_);
@@ -380,8 +379,9 @@ int32_t hello_worldConcurrentClient::recv_hello(const int32_t seqid)
       iprot_->getTransport()->readEnd();
 
       if (result.__isset.success) {
+        // _return pointer has now been filled
         sentry.commit();
-        return _return;
+        return;
       }
       // in a bad state, don't commit
       throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "hello failed: unknown result");

@@ -20,10 +20,10 @@ class hello_worldHandler : virtual public hello_worldIf {
     // Your initialization goes here
   }
 
-  int32_t hello() {
+  void hello(std::string& _return) {
     // Your implementation goes here
+    _return = "hello world";
     printf("hello\n");
-    return 1;
   }
 
 };
