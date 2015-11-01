@@ -13,6 +13,7 @@
 #include <curl/curl.h>
 
 #include "../cache_implementation/RandomCache.h"
+#include "../cache_implementation/FifoCache.h"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -49,7 +50,7 @@ public:
                 cache.insert_into_cache(url, _return);
             }
 
-            std::cout << boost::format("url: %1%\ncode: %2%\n") % url % res;
+            std::cout << boost::format("%1%\tcode: %2%\n") % url % res;
         }
         return;
     }

@@ -3,6 +3,7 @@
 #include <thrift/protocol/TBinaryProtocol.h>
 
 #include <iostream>
+#include <boost/format.hpp>
 
 #include "proxy_server.h"
 
@@ -21,8 +22,12 @@ int main(int argc, char *argv[]) {
     transport->open();
 
     std::string return_string;
-    client.get_page(return_string, "https://www.google.com");
-    cout << return_string << endl;
+    std::vector<std::string> urls_to_be_retrieved {"http://www.ign.com", "https://www.google.com", "https://www.google.com", "http://www.ign.com", "https://www.youtube.com", "https://www.twitter.com", "http://www.stackoverflow.com", "https://www.facebook.com", "https://www.linkedin.com", "http://www.gamespot.com/", "http://www.amazon.com/"};
+    for (auto url : urls_to_be_retrieved) {
+        client.get_page(return_string, url);
+        cout << boost::format("get %1%\n") % url;
+    }
+
     transport->close();
 
     return 0;

@@ -19,11 +19,12 @@ void BaseCache::insert_into_cache(const std::string& url, const std::string& con
     update_cache_history(url);
     cache_map[url] = content;
     cache_size += content.size();
+    std::cout << boost::format("\tCurrent cache size: %1% kb\n") % (cache_size / 1024);
     while(get_cache_size() > cache_size_maximum)
     {
         evict();
+        std::cout << boost::format("\tDeducted cache size: %1% kb\n") % (cache_size / 1024);
     }
-    std::cout << boost::format("current cache size: %1% kb\n") % (cache_size / 1024);
 };
 
 std::string BaseCache::retrieve_content_of_url(const std::string& url) const {
