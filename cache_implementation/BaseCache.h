@@ -18,10 +18,10 @@ public:
         return cache_size;
     };
 
-    virtual void deduct_cache_size(const double& bytes_to_be_deducted);
-    virtual void insert_into_cache(const std::string& url, const std::string& content);
-    virtual std::string retrieve_content_of_url(const std::string& url) const;
-    virtual bool check_if_exist_content_of_url(const std::string& url);
+    virtual void deduct_cache_size(const double& bytes_to_be_deducted) final;
+    virtual void insert_into_cache(const std::string& url, const std::string& content) final;
+    virtual std::string retrieve_content_of_url(const std::string& url) const final;
+    virtual bool check_if_exist_content_of_url(const std::string& url) final;
     virtual void update_cache_history(const std::string &url, const double size) = 0;
     virtual void evict() = 0;
 

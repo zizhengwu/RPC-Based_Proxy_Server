@@ -22,5 +22,4 @@ private:
     double size;
 };
 
-
 #endif //SERVER_TUPLE_H
