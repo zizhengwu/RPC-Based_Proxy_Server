@@ -6,6 +6,7 @@
 #include <time.h>
 #include <boost/format.hpp>
 #include <iostream>
+#include <boost/unordered_map.hpp>
 
 class BaseCache {
 
@@ -28,7 +29,7 @@ public:
 protected:
     double cache_size;
     double cache_size_maximum;
-    std::map<std::string, std::string> cache_map;
+    boost::unordered_map<std::string, std::string> cache_map;
 };
 
 
