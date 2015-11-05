@@ -14,5 +14,4 @@ private:
 
 };
 
-
 #endif //RANDOMCACHE_H

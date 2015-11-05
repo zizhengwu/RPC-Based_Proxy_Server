@@ -64,7 +64,7 @@ public:
 
 private:
     // modify the policy of replacement here
-    RandomCache cache;
+    MaxsCache cache;
 };
 
 

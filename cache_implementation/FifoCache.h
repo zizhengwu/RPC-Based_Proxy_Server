@@ -1,9 +1,8 @@
+#ifndef FIFOCACHE_H
+#define FIFOCACHE_H
+
 #include "BaseCache.h"
 #include <queue>
-
-#ifndef FIFOCACHE_H
-#define RPC_BASED_PROXY_SERVER_FIFOCACHE_H
-
 
 class FifoCache : public BaseCache {
 public:
