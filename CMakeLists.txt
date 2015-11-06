@@ -3,7 +3,7 @@ project(RPC-Based_Proxy_Server)
 
 FIND_PACKAGE(CURL REQUIRED)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -w")
 
 set(SOURCE_SERVER
         gen-cpp/proxy_server.cpp

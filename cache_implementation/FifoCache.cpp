@@ -1,5 +1,6 @@
 #include "FifoCache.h"
 #include <boost/format.hpp>
+#include <iostream>
 
 void FifoCache::update_cache_history(const std::string &url, const double size) {
     fifo_queue.push(url);
