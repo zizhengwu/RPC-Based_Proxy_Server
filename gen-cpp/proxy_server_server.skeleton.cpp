@@ -35,6 +35,7 @@ public:
         // Your implementation goes here
         // hit cache
         if (boost::algorithm::starts_with(url, "clean")) {
+            std::cout << url << std::endl;
             std::vector<std::string> string_split_result;
             boost::algorithm::split(string_split_result, url, boost::is_any_of(" "));
             double cache_size_maximum = atof(string_split_result.at(1).c_str());
@@ -103,4 +104,3 @@ int main(int argc, char **argv) {
     server.serve();
     return 0;
 }
-
