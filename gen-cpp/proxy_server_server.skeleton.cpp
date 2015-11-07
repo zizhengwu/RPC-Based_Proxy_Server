@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <curl/curl.h>
 
@@ -33,9 +34,26 @@ public:
         request_total_count += 1;
         // Your implementation goes here
         // hit cache
-        if (cache.check_if_exist_content_of_url(url)) {
+        if (boost::algorithm::starts_with(url, "clean")) {
+            std::vector<std::string> string_split_result;
+            boost::algorithm::split(string_split_result, url, boost::is_any_of(" "));
+            double cache_size_maximum = atof(string_split_result.at(1).c_str());
+            request_total_count = 0;
+            request_hit_count = 0;
+            request_miss_count = 0;
+            if (boost::algorithm::starts_with(url, "clean_fifo")) {
+                cache = std::shared_ptr<FifoCache> (new FifoCache(cache_size_maximum));
+            }
+            else if (boost::algorithm::starts_with(url, "clean_random")) {
+                cache = std::shared_ptr<RandomCache> (new RandomCache(cache_size_maximum));
+            }
+            else if (boost::algorithm::starts_with(url, "clean_maxs")) {
+                cache = std::shared_ptr<MaxsCache> (new MaxsCache(cache_size_maximum));
+            }
+        }
+        else if (cache->check_if_exist_content_of_url(url)) {
             request_hit_count += 1;
-            _return = cache.retrieve_content_of_url(url);
+            _return = cache->retrieve_content_of_url(url);
         }
         // not in cache
         else {
@@ -51,11 +69,11 @@ public:
                 curl_easy_setopt(curl, CURLOPT_WRITEDATA, &_return);
                 res = curl_easy_perform(curl);
                 curl_easy_cleanup(curl);
-                cache.insert_into_cache(url, _return);
+                cache->insert_into_cache(url, _return);
             }
-
-            std::cout << boost::format("%1%\tcode: %2%\tsize: %3% kb\trequest_total_count: %4%\trequest_hit_count: %5%\n") % url % res % (_return.size() / 1024) % request_total_count % request_hit_count;
+            std::cout << boost::format("%1%\tcode: %2%\tsize: %3% kb\n") % url % res % (_return.size() / 1024);
         }
+        std::cout << boost::format("request_total_count: %1%\trequest_hit_count: %2%\n") % request_total_count % request_hit_count;
         return;
     }
 
@@ -67,7 +85,7 @@ public:
 
 private:
     // modify the policy of replacement here
-    MaxsCache cache;
+    std::shared_ptr<BaseCache> cache;
     int request_total_count;
     int request_hit_count;
     int request_miss_count;

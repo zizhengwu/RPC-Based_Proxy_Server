@@ -5,7 +5,7 @@
 class RandomCache : public BaseCache{
 public:
     virtual ~RandomCache() { }
-    RandomCache() { }
+    RandomCache(double cache_size_maximum) : BaseCache(cache_size_maximum) { }
 
     void evict() override ;
     void update_cache_history(const std::string &url, const double size) override;

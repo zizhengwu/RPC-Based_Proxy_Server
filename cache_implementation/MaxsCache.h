@@ -12,7 +12,7 @@ public:
     virtual void update_cache_history(const std::string &url, const double size) override;
     virtual void evict() override;
 
-    MaxsCache() { }
+    MaxsCache(double cache_size_maximum) : BaseCache(cache_size_maximum) { }
     virtual ~MaxsCache() { }
 
 private:

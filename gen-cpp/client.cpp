@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     proxy_serverClient client(protocol);
     transport->open();
     std::vector<std::string> urls_to_be_retrieved;
-    std::ifstream input("urls.ext");
+    std::ifstream input("urls.txt");
     for( std::string line; getline( input, line ); )
     {
         urls_to_be_retrieved.push_back(line);
