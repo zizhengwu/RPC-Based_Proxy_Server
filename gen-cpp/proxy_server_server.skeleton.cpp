@@ -38,7 +38,7 @@ public:
             _return = cache.retrieve_content_of_url(url);
         }
         // not in cache
-        else{
+        else {
             request_miss_count += 1;
             CURL *curl;
             CURLcode res;
