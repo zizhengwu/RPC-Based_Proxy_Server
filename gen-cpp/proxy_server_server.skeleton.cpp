@@ -25,18 +25,21 @@ using boost::shared_ptr;
 
 class proxy_serverHandler : virtual public proxy_serverIf {
 public:
-    proxy_serverHandler() {
+    proxy_serverHandler() : request_total_count(0), request_hit_count(0), request_miss_count(0) {
         // Your initialization goes here
     }
 
     void get_page(std::string& _return, const std::string& url) {
+        request_total_count += 1;
         // Your implementation goes here
         // hit cache
         if (cache.check_if_exist_content_of_url(url)) {
+            request_hit_count += 1;
             _return = cache.retrieve_content_of_url(url);
         }
         // not in cache
         else{
+            request_miss_count += 1;
             CURL *curl;
             CURLcode res;
 
@@ -51,7 +54,7 @@ public:
                 cache.insert_into_cache(url, _return);
             }
 
-            std::cout << boost::format("%1%\tcode: %2%\tsize: %3% kb\n") % url % res % (_return.size() / 1024);
+            std::cout << boost::format("%1%\tcode: %2%\tsize: %3% kb\trequest_total_count: %4%\trequest_hit_count: %5%\n") % url % res % (_return.size() / 1024) % request_total_count % request_hit_count;
         }
         return;
     }
@@ -65,9 +68,10 @@ public:
 private:
     // modify the policy of replacement here
     MaxsCache cache;
+    int request_total_count;
+    int request_hit_count;
+    int request_miss_count;
 };
-
-
 
 int main(int argc, char **argv) {
     int port = 9090;
