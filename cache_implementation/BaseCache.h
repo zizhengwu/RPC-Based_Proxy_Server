@@ -2,10 +2,6 @@
 #define BASECACHE_H
 
 #include <string>
-#include <map>
-#include <time.h>
-#include <boost/format.hpp>
-#include <iostream>
 #include <boost/unordered_map.hpp>
 
 class BaseCache {

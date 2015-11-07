@@ -1,5 +1,6 @@
 #include "RandomCache.h"
 #include <boost/format.hpp>
+#include <iostream>
 
 void RandomCache::evict() {
     auto item = cache_map.begin();
