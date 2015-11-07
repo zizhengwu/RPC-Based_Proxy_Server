@@ -2,15 +2,13 @@
 #include <iostream>
 #include <boost/format.hpp>
 
-BaseCache::BaseCache() {
+BaseCache::BaseCache(double cache_size_maximum) : cache_size_maximum(cache_size_maximum) {
     cache_size = 0;
     srand(time(NULL));
-    // 1024 kb
-    cache_size_maximum = 1024000;
 }
 
 BaseCache::~BaseCache() {
-
+    std::cout << "BaseCache destructed" << std::endl;
 }
 
 void BaseCache::deduct_cache_size(const double& bytes_to_be_deducted) {

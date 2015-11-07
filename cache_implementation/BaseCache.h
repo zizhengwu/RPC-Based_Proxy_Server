@@ -8,8 +8,7 @@ class BaseCache {
 
 public:
     virtual ~BaseCache();
-
-    BaseCache();
+    explicit BaseCache(double cache_size_maximum);
 
     double get_cache_size() const {
         return cache_size;
