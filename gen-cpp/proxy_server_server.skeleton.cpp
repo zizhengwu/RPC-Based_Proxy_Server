@@ -33,7 +33,7 @@ public:
     void get_page(std::string& _return, const std::string& url) {
         request_total_count += 1;
         // Your implementation goes here
-        // hit cache
+        // flush cache or change cache policy
         if (boost::algorithm::starts_with(url, "clean")) {
             std::cout << url << std::endl;
             std::vector<std::string> string_split_result;
@@ -52,6 +52,7 @@ public:
                 cache = std::shared_ptr<MaxsCache> (new MaxsCache(cache_size_maximum));
             }
         }
+        // hit cache
         else if (cache->check_if_exist_content_of_url(url)) {
             request_hit_count += 1;
             _return = cache->retrieve_content_of_url(url);
@@ -85,7 +86,6 @@ public:
     }
 
 private:
-    // modify the policy of replacement here
     std::shared_ptr<BaseCache> cache;
     int request_total_count;
     int request_hit_count;
