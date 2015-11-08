@@ -32,3 +32,6 @@ target_link_libraries(server thrift curl)
 
 add_executable(client ${SOURCE_CLIENT})
 target_link_libraries(client thrift)
+
+file(COPY test_cases DESTINATION .)
+file(COPY run_client.sh DESTINATION .)

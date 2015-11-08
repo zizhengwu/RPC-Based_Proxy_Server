@@ -37,7 +37,6 @@ int main(int argc, char *argv[]) {
         cout << boost::format("get %1%\tsize: %2% kb\n") % url % (return_string.size() / 1024);
     }
     time_after = boost::posix_time::microsec_clock::universal_time();
-    cout <<  boost::format("URL Num: %1%\n") % url_number << endl;
     cout << "time elapse: " << time_after - time_before << endl;
 
     transport->close();
