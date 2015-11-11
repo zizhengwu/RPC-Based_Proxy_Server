@@ -1,0 +1,23 @@
+sudo: required
+dist: trusty
+
+language: cpp
+
+compiler: gcc
+
+before_install:
+    - sudo apt-get update -qq
+
+install:
+    - sudo apt-get install -y libboost-dev libboost-test-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libevent-dev automake libtool flex bison pkg-config g++ libssl-dev ant
+    - sudo apt-get install -y libcurl4-openssl-dev
+    - wget http://www.us.apache.org/dist/thrift/0.9.3/thrift-0.9.3.tar.gz
+    - tar xfz thrift-0.9.3.tar.gz
+    - cd thrift-0.9.3 && ./configure --without-java --without-python --without-ruby --without-erlang --without-go --without-nodejs && sudo make install && cd ..
+
+before_script:
+    - mkdir build
+    - cd build
+    - cmake ..
+
+script: make
