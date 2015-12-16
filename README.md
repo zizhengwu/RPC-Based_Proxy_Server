@@ -3,6 +3,7 @@
 To run, you need to modify `gen-cpp/client.cpp' to enter the the IP of the computer which you would like to run server on. Then
 
     mkdir build
+    cd build
     cmake ..
     make
 
